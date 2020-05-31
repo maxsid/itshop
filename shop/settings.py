@@ -27,8 +27,13 @@ SECRET_KEY = '2bcdz6hof-^n0d*dcj#71s+9rhgjjkgzk&fnh5hj@0846#di6o'
 DEBUG = True
 THUMBNAIL_DEBUG = True
 
-ALLOWED_HOSTS = ['35.196.43.97', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
+# Add host address from environment if it exists
+host = os.getenv("HOST")
+if host:
+    ALLOWED_HOSTS.append(host)
+del host
 
 # Application definition
 

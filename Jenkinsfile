@@ -14,7 +14,7 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        sh "scp -r * bitnami@djangostack:/opt/bitnami/apps/django/django_projects/shop"
+        sh "scp -r * my3ukant@djangostack:~/app"
       }
     }
   }
