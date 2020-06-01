@@ -78,6 +78,8 @@ INSTALLED_APPS = [
     'oscar.apps.dashboard.communications',
     'oscar.apps.dashboard.shipping',
 
+    'oscar_accounts.apps.AccountsConfig',
+    'oscar_accounts.dashboard.apps.AccountsDashboardConfig',
     # 3rd-party apps that oscar depends on
     'widget_tweaks',
     'haystack',
