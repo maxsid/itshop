@@ -185,4 +185,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+location = lambda x: os.path.join(os.path.dirname(os.path.realpath(__file__)), x)
+
 STATIC_URL = '/static/'
+STATIC_ROOT = location('static')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = location('media')
+
+OSCAR_DEFAULT_CURRENCY = "RUB"
+OSCAR_SHOP_NAME = "IT SHOP"
