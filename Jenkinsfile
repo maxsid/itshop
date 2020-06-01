@@ -14,7 +14,7 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        sh "scp -r * my3ukant@djangostack:~/app"
+        sh "scp -r * djangostack:~/app"
       }
     }
   }
