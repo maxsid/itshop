@@ -80,6 +80,8 @@ INSTALLED_APPS = [
 
     'oscar_accounts.apps.AccountsConfig',
     'oscar_accounts.dashboard.apps.AccountsDashboardConfig',
+
+    'post_office',
     # 3rd-party apps that oscar depends on
     'widget_tweaks',
     'haystack',
@@ -220,3 +222,5 @@ OSCAR_DASHBOARD_NAVIGATION.append(
             },
         ]
     })
+
+EMAIL_BACKEND = 'post_office.EmailBackend'
