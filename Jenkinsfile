@@ -14,7 +14,7 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        sh "scp -r * djangostack:~/app"
+        sh "scp -r * shop.vkr.sidorov.space:~/app"
       }
     }
   }
