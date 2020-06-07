@@ -16,7 +16,7 @@ pipeline {
       }
     }
     stage('Unit Test') {
-	  agent { docker { image "$BUILD_IMAGE_NAME" } }
+	  agent { docker { image "$IMAGE_NAME" } }
       steps {
         sh "python -m unittest discover tests -p '*_test.py'"
       }
