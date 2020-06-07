@@ -7,12 +7,18 @@ pipeline {
                                 artifactDaysToKeepStr: '5'))
   }
   environment {
-    IMAGE_NAME              = "us.gcr.io/jenkins-ci-cd-278717/itshop"
+    COMMIT_HASH = """${sh(
+                   returnStdout: true,
+                   script: 'git rev-parse --short=12 HEAD'
+                   ).trim()}"""
+    PROJECT_NAME            = "jenkins-ci-cd-278717"
+    IMAGE_NAME              = "${PROJECT_NAME}/itshop"
+    CONTAINER_REGISTRY      = "us.gcr.io"
   }
   stages {
     stage('Build') {
       steps {
-        sh "docker build -f docker/Dockerfile -t $IMAGE_NAME ."
+        docker.build("${env.IMAGE_NAME}", "./docker/Dockerfile")
       }
     }
     stage('Unit Test') {
@@ -21,9 +27,13 @@ pipeline {
         sh "python -m unittest discover tests -p '*_test.py'"
       }
     }
-    stage('Deploy') {
+    stage('Delivery') {
       steps {
-        sh "scp -r * shop.vkr.sidorov.space:~/app"
+        dockerImage = docker.image("${env.IMAGE_NAME}")
+        docker.withRegistry("https://${env.CONTAINER_REGISTRY}", "gcr:jenkins-ci-cd-278717") {
+            dockerImage.push("${env.COMMIT_HASH}")
+            dockerImage.push("latest")
+        }
       }
     }
   }
