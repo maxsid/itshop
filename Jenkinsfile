@@ -6,8 +6,17 @@ pipeline {
                                 artifactNumToKeepStr: '10',
                                 artifactDaysToKeepStr: '5'))
   }
+  environment {
+    IMAGE_NAME              = "us.gcr.io/jenkins-ci-cd-278717/itshop"
+  }
   stages {
-    stage('Test') {
+    stage('Build') {
+      steps {
+        sh "docker build -f docker/Dockerfile -t $IMAGE_NAME ."
+      }
+    }
+    stage('Unit Test') {
+	  agent { docker { image "$BUILD_IMAGE_NAME" } }
       steps {
         sh "python -m unittest discover tests -p '*_test.py'"
       }

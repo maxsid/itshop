@@ -1,0 +1,6 @@
+Django==2.2.12
+django-oscar==2.0.4
+pycountry==19.8.18
+sorl-thumbnail==12.6.3
+django-oscar-accounts==2.0.0
+django-post-office==3.4.1
