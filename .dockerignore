@@ -27,7 +27,7 @@ stats
 Dockerfile
 
 venv/
-docker/
+docker/Dockerfile
 .gitignore
 db.sqlite3
 Jenkinsfile
