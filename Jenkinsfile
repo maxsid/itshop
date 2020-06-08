@@ -52,7 +52,7 @@ pipeline {
           remote.host = "${env.WEB_SERVER_HOST}"
           remote.allowAnyHosts = true
 
-          withCredentials([sshUserPrivateKey(credentialsId: '${env.SSH_KEY_ID}', keyFileVariable: 'identity',
+          withCredentials([sshUserPrivateKey(credentialsId: "${env.SSH_KEY_ID}", keyFileVariable: 'identity',
                                              passphraseVariable: '', usernameVariable: 'userName')]) {
             remote.user = userName
             remote.identityFile = identity
