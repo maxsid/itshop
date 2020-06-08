@@ -19,7 +19,7 @@ pipeline {
     stage('Build') {
       steps {
         script {
-          docker.build("${env.IMAGE_NAME}", "./docker/Dockerfile")
+          docker.build("${env.IMAGE_NAME}", "./docker")
         }
       }
     }
