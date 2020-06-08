@@ -56,7 +56,7 @@ pipeline {
                                              passphraseVariable: '', usernameVariable: 'userName')]) {
             remote.user = userName
             remote.identityFile = identity
-            sshCommand remote: remote, command: 'cd app && docker-compose pull'
+            sshCommand remote: remote, command: 'cd app && docker-compose pull && docker-compose up -d'
           }
         }
       }
