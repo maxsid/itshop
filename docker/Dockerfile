@@ -3,6 +3,7 @@ FROM python:3.8.1
 RUN /usr/local/bin/python -m pip install --upgrade pip
 WORKDIR /usr/src/app
 COPY . .
+WORKDIR /usr/src/app
 RUN pip install -r docker/requirements.txt
 
 EXPOSE 8000
