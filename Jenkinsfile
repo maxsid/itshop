@@ -18,7 +18,9 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        docker.build("${env.IMAGE_NAME}", "./docker/Dockerfile")
+        script {
+          docker.build("${env.IMAGE_NAME}", "./docker/Dockerfile")
+        }
       }
     }
     stage('Unit Test') {
@@ -29,10 +31,12 @@ pipeline {
     }
     stage('Delivery') {
       steps {
-        dockerImage = docker.image("${env.IMAGE_NAME}")
-        docker.withRegistry("https://${env.CONTAINER_REGISTRY}", "gcr:jenkins-ci-cd-278717") {
+        script {
+          dockerImage = docker.image("${env.IMAGE_NAME}")
+          docker.withRegistry("https://${env.CONTAINER_REGISTRY}", "gcr:jenkins-ci-cd-278717") {
             dockerImage.push("${env.COMMIT_HASH}")
             dockerImage.push("latest")
+          }
         }
       }
     }
