@@ -14,7 +14,8 @@ pipeline {
     PROJECT_NAME            = "jenkins-ci-cd-278717"
     IMAGE_NAME              = "${PROJECT_NAME}/itshop"
     CONTAINER_REGISTRY      = "us.gcr.io"
-
+	CONTAINER_REGISTRY_CRED_ID	= "jenkins-ci-cd-278717"
+	
     SSH_KEY_ID              = "my3uk_ssh_key"
     WEB_SERVER_NAME         = "django-shop-1"
     WEB_SERVER_HOST         = "shop.vkr.sidorov.space"
@@ -36,17 +37,21 @@ pipeline {
     stage('Delivery') {
       steps {
         script {
-          dockerImage = docker.image("${env.IMAGE_NAME}")
-          docker.withRegistry("https://${env.CONTAINER_REGISTRY}", "gcr:jenkins-ci-cd-278717") {
-            dockerImage.push("${env.COMMIT_HASH}")
-            dockerImage.push("latest")
+          docker.withRegistry("https://${env.CONTAINER_REGISTRY}", "gcr:${env.CONTAINER_REGISTRY_CRED_ID}") {
+            docker.image("${env.IMAGE_NAME}").push("${env.COMMIT_HASH}")
           }
         }
       }
     }
     stage('Web Server Pulling') {
+	  when { branch 'master' }
       steps {
         script {
+		  // push latest
+          docker.withRegistry("https://${env.CONTAINER_REGISTRY}", "gcr:${env.CONTAINER_REGISTRY_CRED_ID}") {
+            docker.image("${env.IMAGE_NAME}").push("latest")
+          }
+		  // pulling
           remote = [:]
           remote.name = "${env.WEB_SERVER_NAME}"
           remote.host = "${env.WEB_SERVER_HOST}"
